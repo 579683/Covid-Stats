@@ -5,9 +5,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import Columns from "react-columns";
 import Form from "react-bootstrap/Form";
+import NumberFormat from 'react-number-format';
 
 function App() {
 
+    /* Relevant hooks */
     const [latest, setLatest] = useState([]);
     const [results, setResults] = useState([]);
     const [searchCountries, setSearchCountries] = useState("");
@@ -32,7 +34,7 @@ function App() {
     const lastUpdated = date.toString();
 
     const filterCountries = results.filter(item => {
-         return searchCountries !== "" ? item.country.includes(searchCountries) : item;
+         return searchCountries !== "" ? item.country.toLowerCase().includes(searchCountries.toLowerCase()) : item;
     })
 
     const countries = filterCountries.map((data, i) => {
@@ -71,7 +73,8 @@ function App() {
             <Card bg="secondary" text="white" className="text-center" style={{margin: "10px"}}>  
                 <Card.Body>
                 <Card.Title>Cases</Card.Title>
-                <Card.Text>{latest.cases}</Card.Text>
+                {/* <Card.Text>{latest.cases}</Card.Text> */}
+                <NumberFormat value={latest.cases} displayType={'text'} thousandSeparator={true} />
                 </Card.Body>
                 <Card.Footer>
                 <small>Last updated: {lastUpdated}</small>
@@ -81,7 +84,8 @@ function App() {
             <Card bg="danger" text={"white"} className="text-center" style={{margin: "10px"}}>     
                 <Card.Body>
                 <Card.Title>Deaths</Card.Title>
-                <Card.Text>{latest.deaths}</Card.Text>
+                {/* <Card.Text>{latest.deaths}</Card.Text> */}
+                <NumberFormat value={latest.deaths} displayType={'text'} thousandSeparator={true} />
                 </Card.Body>
                 <Card.Footer>
                 <small>Last updated: {lastUpdated}</small>
@@ -91,7 +95,8 @@ function App() {
             <Card bg="success" text={"white"} className="text-center" style={{margin: "10px"}}>
                 <Card.Body>
                 <Card.Title>Recovered</Card.Title>
-                <Card.Text>{latest.recovered}</Card.Text>
+                {/* <Card.Text>{latest.recovered}</Card.Text> */}
+                <NumberFormat value={latest.recovered} displayType={'text'} thousandSeparator={true} />
                 </Card.Body>
                 <Card.Footer>
                 <small>Last updated: {lastUpdated}</small>
