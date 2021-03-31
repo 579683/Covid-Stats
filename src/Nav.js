@@ -1,11 +1,16 @@
 import React from 'react';
 import "./App.css";
+import {Link} from "react-router-dom";
 
 function Nav() {
     return <nav>
-                <div>Logo</div>
+               <Link style={{color: "white", textDecoration: "none"}} to="/">
+                    <div>Home</div>
+               </Link>
                 <ul className="nav-links">
-                    <li>About</li>
+                <Link style={{color: "white", textDecoration: "none"}} to="/about">
+                    <li>Norway's Covid stats</li>
+                </Link>
                 </ul>
             </nav>
 }
