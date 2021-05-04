@@ -5,11 +5,11 @@ import {Link} from "react-router-dom";
 function Nav() {
     return <nav>
                <Link style={{color: "white", textDecoration: "none"}} to="/">
-                    <div>Home</div>
+                    <div style= {{ fontSize: "30px"}}>🌎</div>
                </Link>
                 <ul className="nav-links">
-                <Link style={{color: "white", textDecoration: "none"}} to="/about">
-                    <li>Norway's Covid stats</li>
+                <Link style={{color: "white", textDecoration: "none", marginTop: "10px"}} to="/about">
+                    <li>🇳🇴 Covid stats</li>
                 </Link>
                 </ul>
             </nav>

@@ -6,6 +6,8 @@ import axios from "axios";
 import Columns from "react-columns";
 import Form from "react-bootstrap/Form";
 import NumberFormat from 'react-number-format';
+import Toggle from 'react-toggle';
+import "react-toggle/style.css";
 
 function Home() {
 
@@ -13,6 +15,7 @@ function Home() {
     const [latest, setLatest] = useState([]);
     const [results, setResults] = useState([]);
     const [searchCountries, setSearchCountries] = useState("");
+    const [darkTheme, setDarkTheme] = useState(false);
 
     /* Get the info from API's */
     useEffect(() => {
@@ -39,7 +42,7 @@ function Home() {
 
     const countries = filterCountries.map((data, i) => {
         return (
-            <Card key={i} bg="light" text="dark" className="text-center" style={{margin: "10px"}}>
+            <Card key={i} bg={darkTheme ? "dark" : "light"} text={darkTheme ? "light" : "dark"} className="text-center" style={{margin: "10px"}}>
                 <Card.Img variant="top" src={data.countryInfo.flag} />
                 <Card.Body>
                     <Card.Title>{data.country}</Card.Title>
@@ -63,11 +66,26 @@ function Home() {
         query: 'min-width: 1000px'
     }];
 
+    const handleDarkThemeChange = () => {
+        setDarkTheme(!darkTheme)
+    };
+
     return (
-        <div>
+        <div style = {{backgroundColor: darkTheme ? "black" : "white", color: darkTheme ? "white" : "black"}}>
             <br />
             <h2 style={{textAlign: "center"}}>Covid-19 Live Statistics</h2>
             <br />
+            <div style={{textAlign: "center"}}>
+            <Toggle
+                defaultChecked={false}
+                icons={{
+                    checked: "🌜",
+                    unchecked: "🌞",
+                }}
+                onChange={handleDarkThemeChange} 
+                />
+            </div>
+            <br/>
             <CardDeck>
 
             {/* Displays case count */}
