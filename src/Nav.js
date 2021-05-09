@@ -8,6 +8,9 @@ function Nav() {
                     <div style= {{ fontSize: "30px"}}>🌎</div>
                </Link>
                 <ul className="nav-links">
+                <Link style={{color: "white", textDecoration: "none", marginTop: "10px", marginRight: "50px"}} to="graph">
+                    <li>Graph</li>
+                </Link>
                 <Link style={{color: "white", textDecoration: "none", marginTop: "10px"}} to="/about">
                     <li>🇳🇴 Covid stats</li>
                 </Link>
