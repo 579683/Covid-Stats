@@ -16,10 +16,6 @@ function Graph() {
       }];
     
     const options = {
-        chart: {
-          height: 350,
-          type: 'area'
-        },
         dataLabels: {
           enabled: false
         },
@@ -48,7 +44,7 @@ function Graph() {
         },
         tooltip: {
           x: {
-            format: 'dd/MM/yy HH:mm'
+            format: 'dd/MM/yy'
           },
         },
       };
@@ -61,9 +57,12 @@ function Graph() {
             }}
             >
                 <br/>
-                <h2>Graph</h2>
+                <h2>COVID-19 Global graphs</h2>
                 <br />
                 <ReactApexChart options={options} series={series} type="area" height={350} />
+                <br />
+                <br />
+                <ReactApexChart options={options} series={series} type="bar" height={350} />
                 <br />
             </div>
     );
