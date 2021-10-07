@@ -8,6 +8,9 @@ import Form from "react-bootstrap/Form";
 import NumberFormat from 'react-number-format';
 import Toggle from 'react-toggle';
 import "react-toggle/style.css";
+import image from "../images/image.png"
+import {Cards} from "./index"
+import {fetchData} from '../api';
 
 function About() {
 
@@ -16,6 +19,7 @@ function About() {
     const [results, setResults] = useState([]);
     const [searchCountries, setSearchCountries] = useState("");
     const [darkTheme, setDarkTheme] = useState(false);
+    const [data, setData] = useState({})
 
     /* Get the info from API's */
     useEffect(() => {
@@ -32,6 +36,11 @@ function About() {
             console.log(err);
         });
     }, []);
+
+    useEffect(async () => {
+        const fetchedData = await fetchData();
+        setData(fetchedData);
+    })
 
     const date = new Date(parseInt(latest.updated));
     const lastUpdated = date.toString();
@@ -73,7 +82,8 @@ function About() {
     return (
         <div style = {{backgroundColor: darkTheme ? "black" : "white", color: darkTheme ? "white" : "black"}}>
             <br />
-            <h2 style={{textAlign: "center"}}>Covid-19 Live Statistics</h2>
+            {/* <h2 style={{textAlign: "center"}}>Covid-19 Live Statistics</h2> */}
+                <img src={image} style={{width: "400px", marginTop: "10px", marginLeft: "auto", marginRight: "auto", display: "block" }} alt="Covid-19 Live Statistics" />
             <br />
             <div style={{textAlign: "center"}}>
             <Toggle
@@ -86,13 +96,11 @@ function About() {
                 />
             </div>
             <br/>
-            <CardDeck>
-
-            {/* Displays case count */}
+            
+            {/* <CardDeck>
             <Card bg="secondary" text="white" className="text-center" style={{margin: "10px"}}>  
                 <Card.Body>
                 <Card.Title>Cases</Card.Title>
-                {/* <Card.Text>{latest.cases}</Card.Text> */}
                 <NumberFormat value={latest.cases} displayType={'text'} thousandSeparator={true} />
                 </Card.Body>
                 <Card.Footer>
@@ -100,11 +108,9 @@ function About() {
                 </Card.Footer>
             </Card>
 
-            {/* Displays death count */}
             <Card bg="danger" text={"white"} className="text-center" style={{margin: "10px"}}>     
                 <Card.Body>
                 <Card.Title>Deaths</Card.Title>
-                {/* <Card.Text>{latest.deaths}</Card.Text> */}
                 <NumberFormat value={latest.deaths} displayType={'text'} thousandSeparator={true} />
                 </Card.Body>
                 <Card.Footer>
@@ -112,18 +118,18 @@ function About() {
                 </Card.Footer>
             </Card>
 
-            {/* Displays recovered count */}
             <Card bg="success" text={"white"} className="text-center" style={{margin: "10px"}}>
                 <Card.Body>
                 <Card.Title>Recovered</Card.Title>
-                {/* <Card.Text>{latest.recovered}</Card.Text> */}
                 <NumberFormat value={latest.recovered} displayType={'text'} thousandSeparator={true} />
                 </Card.Body>
                 <Card.Footer>
                 <small>Last updated: {lastUpdated}</small>
                 </Card.Footer>
             </Card>
-            </CardDeck>
+            </CardDeck> */}
+
+                <Cards data={data} />   
             <br />
 
             {/* Displays search field */}

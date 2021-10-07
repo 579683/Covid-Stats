@@ -1,54 +1,100 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import "../App.css";
 import ReactApexChart from "react-apexcharts";
+import axios from "axios";
+import image from "../images/image.png";
+import {Chart} from "./index"
+import {fetchData} from '../api';
 
 
 function Graph() {
+  
+  const [chart, setChart] = useState({});
+  const [data, setData] = useState({});
 
-    const series = [{
-        name: 'Cases',
-        data: [557, 78602, 344205, 2651321, 5222614, 9076656, 15231862, 23234707, 31648244, 41761275, 58806043, 78134244, 98259983, 111762700, 123692736, 144742575]
-      }, {
-        name: 'Deaths',
-        data: [17, 2459, 14877, 190322, 341708, 472157, 620018, 805137, 971441, 1138473, 1390694, 1722788, 2115423, 2476309, 2723640, 3072152]
-      }, {
-        name: 'Recovered',
-        data: [30, 22889, 97867, 710018, 2053577, 4526441, 8647438, 14921385, 21733547, 28388094, 37520306, 44086740, 54147169, 63016514, 70137879, 83128167]
-      }];
-    
-    const options = {
-        dataLabels: {
-          enabled: false
-        },
-        stroke: {
-          curve: 'smooth'
-        },
-        xaxis: {
-          type: 'datetime',
-          categories: 
-          ["1/22/20", 
-          "2/22/20", 
-          "3/22/20", 
-          "4/22/20", 
-          "5/22/20", 
-          "6/22/20", 
-          "7/22/20",
-          "8/22/20",
-          "9/22/20",
-          "10/22/20",
-          "11/22/20",
-          "12/22/20",
-          "1/22/21",
-          "2/22/21",
-          "3/22/21",
-          "4/22/21"]
-        },
-        tooltip: {
-          x: {
-            format: 'dd/MM/yy'
+  useEffect(() => {
+    getData();
+  }, [])
+
+  const getData = async () => {
+    try {
+      const res = await axios.get(
+        `https://disease.sh/v3/covid-19/historical/all?lastdays=all`
+      );
+      
+      setChart({
+        labels: Object.keys(res.data.cases),
+        datasets: [
+          {
+            label: "Cases",
+            fill: true,
+            lineTension: 0.1,
+            backgroundColor: "rgba(75,192,192,0.4)",
+            borderColor: "rgba(75,192,192,1)",
+            borderCapStyle: "butt",
+            borderDash: [],
+            borderDashOffset: 0.0,
+            borderJoinStyle: "miter",
+            pointBorderColor: "rgba(75,192,192,1)",
+            pointBackgroundColor: "#fff",
+            pointBorderWidth: 1,
+            pointHoverRadius: 5,
+            pointHoverBackgroundColor: "rgba(75,192,192,1)",
+            pointHoverBorderColor: "rgba(220,220,220,1)",
+            pointHoverBorderWidth: 2,
+            pointRadius: 1,
+            pointHitRadius: 10,
+            data: Object.values(res.data.cases)
           },
-        },
-      };
+          {
+            label: "Deaths",
+            fill: true,
+            lineTension: 0.1,
+            backgroundColor: "red",
+            borderColor: "red",
+            borderCapStyle: "butt",
+            borderDash: [],
+            borderDashOffset: 0.0,
+            borderJoinStyle: "miter",
+            pointBorderColor: "rgba(75,192,192,1)",
+            pointBackgroundColor: "#fff",
+            pointBorderWidth: 1,
+            pointHoverRadius: 5,
+            pointHoverBackgroundColor: "rgba(75,192,192,1)",
+            pointHoverBorderColor: "rgba(220,220,220,1)",
+            pointHoverBorderWidth: 2,
+            pointRadius: 1,
+            pointHitRadius: 10,
+            data: Object.values(res.data.deaths)
+          },
+          {
+            label: "Recovered",
+            fill: true,
+            lineTension: 0.1,
+            backgroundColor: "blue",
+            borderColor: "blue",
+            borderCapStyle: "butt",
+            borderDash: [],
+            borderDashOffset: 0.0,
+            borderJoinStyle: "miter",
+            pointBorderColor: "rgba(75,192,192,1)",
+            pointBackgroundColor: "#fff",
+            pointBorderWidth: 1,
+            pointHoverRadius: 5,
+            pointHoverBackgroundColor: "rgba(75,192,192,1)",
+            pointHoverBorderColor: "rgba(220,220,220,1)",
+            pointHoverBorderWidth: 2,
+            pointRadius: 1,
+            pointHitRadius: 10,
+            data: Object.values(res.data.recovered)
+          }
+        ]
+      });
+
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
 
     return (
         <div 
@@ -58,12 +104,17 @@ function Graph() {
             }}
             >
                 <br/>
-                <h2>COVID-19 Global graphs</h2>
+                {/* <h2>COVID-19 Global graphs</h2> */}
+                <img src={image} style={{width: "400px", marginTop: "10px", marginLeft: "auto", marginRight: "auto", display: "block" }} alt="COVID-19 Global graphs" />
                 <br />
-                <ReactApexChart options={options} series={series} type="area" height={350} />
+                {/* <ReactApexChart options={options} series={series} type="area" height={350} /> */}
+                
+                <div style={{ margin: "20px", width: "2150px", position: "relative", left: "550px", top:"-80px" }}>
+                  <Chart data={chart} />
+                </div>
                 <br />
                 <br />
-                <ReactApexChart options={options} series={series} type="bar" height={350} />
+                {/* <ReactApexChart options={options} series={series} type="bar" height={350} /> */}
                 <br />
             </div>
     );
